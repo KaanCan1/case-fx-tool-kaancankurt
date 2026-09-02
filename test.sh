@@ -1,6 +1,14 @@
 #!/usr/bin/env bash
-# Runs your tests. They must pass with no network at all: we run this with
-# FX_UPSTREAM_BASE pointing at a closed port.
+# Runs the tests. They need no network: every upstream call is intercepted
+# before it leaves the process, so $FX_UPSTREAM_BASE may point at a closed port.
 set -euo pipefail
-echo "test.sh is not implemented yet" >&2
-exit 1
+cd "$(dirname "$0")"
+
+if [ ! -x .venv/bin/python ] || ! .venv/bin/python -c "import pytest, respx" 2>/dev/null; then
+  echo "setting up .venv ..." >&2
+  "${PYTHON:-python3}" -m venv .venv
+  .venv/bin/pip install --quiet --upgrade pip
+  .venv/bin/pip install --quiet -r requirements.txt
+fi
+
+exec .venv/bin/python -m pytest -q "$@"

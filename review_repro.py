@@ -16,8 +16,8 @@ the real frankfurter.dev behaviour, which was measured first with curl:
 Each finding is printed and then asserted, so this file is not a narration: if a
 finding stops reproducing, the script fails. That is the intended signal.
 
-    pip install fastapi httpx respx
-    python review_repro.py
+    ./test.sh          # installs .venv from requirements.txt
+    .venv/bin/python review_repro.py
 """
 
 from __future__ import annotations
