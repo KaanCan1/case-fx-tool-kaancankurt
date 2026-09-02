@@ -82,6 +82,7 @@ caller to mistake for an answer.
 | Upstream returns a rate dated *later* than the day asked for | Refused; the answer is not passed on | `upstream_unavailable` | 502 |
 | `amount` missing, zero, negative, or not finite | Refused | `invalid_amount` | 400 |
 | `amount` has ten decimal places | Accepted; the result is rounded to 2 decimals, the rate never is | — | 200 |
+| A query parameter is rejected in a way none of the rows above covers | Refused | `invalid_request` | 400 |
 | Anything unforeseen | Refused, not absorbed into a result | `internal_error` | 500 |
 
 ## Notes
